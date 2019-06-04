@@ -13,7 +13,8 @@ To correctly attach behavior you have to provide valid configuration values to f
 
 Your embedded models can also embed another models.
 When validate will be called for your primary model it will be called for all your embedded models and fields in your primary model coreesponding to embedded models will be correctly populated with error messages.
-Embedded models will be automatically created by behavior when yor model is populated from database or when it is populated with `Model::load()` data from request 
+Embedded models will be automatically created by behavior when yor model is populated from database or when it is populated with `Model::load()` data from request.
+To auto populate field that is embedded model with `Model::load()` you need to add this field to `rules()` as `safe` 
 
 
 
