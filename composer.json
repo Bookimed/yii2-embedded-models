@@ -1,0 +1,38 @@
+{
+  "name": "indigerd/yii2-embedded-models",
+  "description": "Behaviors for hydration and extraction of embedded models for yii2 framework",
+  "keywords": ["library", "embedded model", "hydration", "extraction"],
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alexander Stepanenko",
+      "email": "alex.stepanenko@gmail.com"
+    }
+  ],
+  "repositories":[
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ],
+  "require": {
+    "php": ">=7.2.0",
+    "yiisoft/yii2": "^2.0.13",
+    "yiisoft/yii2-mongodb": "^2.1",
+    "indigerd/hydrator": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "@stable"
+  },
+  "autoload": {
+    "psr-4": {
+      "indigerd\\embedded\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "indigerd\\embedded\\test\\": "tests"
+    }
+  }
+}
