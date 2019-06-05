@@ -4,6 +4,7 @@ namespace indigerd\embedded\model;
 
 use yii\helpers\ArrayHelper;
 use yii\base\Model as BaseModel;
+use indigerd\embedded\behavior\HydrateCollectionBehavior;
 
 class Model extends BaseModel
 {
@@ -12,10 +13,23 @@ class Model extends BaseModel
 
     public function setAttributes($values, $safeOnly = true)
     {
-        $this->trigger(self::EVENT_BEFORE_POPULATE);
-        $oldValues = $this->getAttributes(\array_keys($values));
+        $this->trigger(Model::EVENT_BEFORE_POPULATE);
+        $keys = [];
+        $reflection = new \ReflectionClass($this);
+        foreach ($values as $key => $value) {
+            if ($reflection->hasProperty($key)) {
+                $keys[] = $key;
+            }
+        }
+        $oldValues = $this->getAttributes($keys);
+        $behaviors = $this->getBehaviors();
+        foreach ($behaviors as $behavior) {
+            if ($behavior instanceof HydrateCollectionBehavior and isset($values[$behavior->attribute])) {
+                unset($oldValues[$behavior->attribute]);
+            }
+        }
         $values = ArrayHelper::merge($oldValues, $values);
         parent::setAttributes($values, $safeOnly);
-        $this->trigger(self::EVENT_AFTER_POPULATE);
+        $this->trigger(Model::EVENT_AFTER_POPULATE);
     }
 }
