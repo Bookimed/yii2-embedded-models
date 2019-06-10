@@ -2,9 +2,9 @@
 
 namespace indigerd\embedded\model;
 
-use yii\helpers\ArrayHelper;
 use yii\db\ActiveRecord as BaseModel;
 use indigerd\embedded\behavior\HydrateCollectionBehavior;
+use indigerd\embedded\helper\ArrayMerge;
 
 class ActiveRecord extends BaseModel
 {
@@ -24,7 +24,7 @@ class ActiveRecord extends BaseModel
                 unset($oldValues[$behavior->attribute]);
             }
         }
-        $values = ArrayHelper::merge($oldValues, $values);
+        $values = ArrayMerge::mergeRecursive($oldValues, $values);
         parent::setAttributes($values, $safeOnly);
         $this->trigger(Model::EVENT_AFTER_POPULATE);
     }

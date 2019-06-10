@@ -2,10 +2,11 @@
 
 namespace indigerd\embedded\model\mongodb;
 
-use yii\helpers\ArrayHelper;
+use MongoDB\BSON\ObjectId;
 use yii\mongodb\ActiveRecord as BaseModel;
 use indigerd\embedded\model\Model;
 use indigerd\embedded\behavior\HydrateCollectionBehavior;
+use indigerd\embedded\helper\ArrayMerge;
 
 class ActiveRecord extends BaseModel
 {
@@ -15,6 +16,9 @@ class ActiveRecord extends BaseModel
         $keys = [];
         foreach ($values as $key => $value) {
             if ($this->hasAttribute($key)) {
+                if ($this->getAttribute($key) instanceof ObjectId) {
+                    continue;
+                }
                 $keys[] = $key;
             }
         }
@@ -25,7 +29,7 @@ class ActiveRecord extends BaseModel
                 unset($oldValues[$behavior->attribute]);
             }
         }
-        $values = ArrayHelper::merge($oldValues, $values);
+        $values = ArrayMerge::mergeRecursive($oldValues, $values);
         parent::setAttributes($values, $safeOnly);
         $this->trigger(Model::EVENT_AFTER_POPULATE);
     }
