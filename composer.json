@@ -27,12 +27,12 @@
   },
   "autoload": {
     "psr-4": {
-      "indigerd\\embedded\\": "src"
+      "indigerd\\embedded\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "indigerd\\embedded\\test\\": "tests"
+      "indigerd\\embedded\\tests\\": "tests/"
     }
   }
 }
