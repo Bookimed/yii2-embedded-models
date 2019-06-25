@@ -20,9 +20,11 @@ class ArrayMerge
 
     public static function mergeRecursive($array1, $array2)
     {
-        foreach($array2 as $key=>$val) {
-            if(isset($array1[$key])) {
-                if(self::isAssoc($val)) {
+        $array1 = (array)$array1;
+        $array2 = (array)$array2;
+        foreach ($array2 as $key => $val) {
+            if (isset($array1[$key])) {
+                if (self::isAssoc($val)) {
                     $array1[$key] = self::mergeRecursive($array1[$key], $val);
                 } else {
                     $array1[$key] = $val;
